@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Demop.AllUserControl.AuthUC">
+  <Grid>
+        <Border Width="320"
+                Padding="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                CornerRadius="10">
+
+            <StackPanel Spacing="10">
+                <TextBlock Text="Авторизация"
+                           FontSize="20"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Логин"/>
+                <TextBox x:Name="LoginTb"/>
+
+                <TextBlock Text="Пароль"/>
+                <TextBox x:Name="PasswordTb" PasswordChar="*"/>
+
+                <Button Content="Войти" Click="LoginBtn_Click"/>       
+            </StackPanel>
+        </Border>
+    </Grid>
+
+</UserControl>

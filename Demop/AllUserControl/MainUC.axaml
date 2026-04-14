@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:Demop.AllUserControl"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Demop.AllUserControl.MainUC"
+             xmlns:uc="clr-namespace:Demop.AllUserControl"
+             xmlns:vm="using:Demop.AllUserControl"
+             Name="MuControl"
+             x:DataType="vm:MainUC"
+             Loaded="Control_OnLoaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ListBox Name="ProdustListB"
+                 Grid.Row="1"
+                 ItemsSource="{Binding ProductList}"
+                 SelectionChanged="ProductListBox_OnSelectionChanged">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="150,*,120" Margin="5">
+
+                        <!-- Фото -->
+                        <Border Grid.Column="0"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="3"
+                                Padding="5">
+                            <Image Width="100"
+                                   Height="100"
+                                   Source="{Binding ImagePath}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                        </Border>
+
+                        <!-- Информация -->
+                        <Border Grid.Column="1"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="3"
+                                Padding="5">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Category}" FontWeight="Bold"/>
+                                    <TextBlock Text=" | " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding NameProductNavigation.NameProduct}" FontWeight="Bold"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Описание товара: "/>
+                                    <TextBlock Text="{Binding Description}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Производитель: "/>
+                                    <TextBlock Text="{Binding Manufacturer}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Поставщик: "/>
+                                    <TextBlock Text="{Binding Suplier}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Цена: "/>
+                                    <TextBlock Text="{Binding Price}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Единица измерения: "/>
+                                    <TextBlock Text="{Binding ProductUnit}"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Количество на складе: "/>
+                                    <TextBlock Text="{Binding Count}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Скидка -->
+                        <Border Grid.Column="2"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="3"
+                                Padding="5">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Действующая"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="скидка"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Discount}"
+                                           FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Name="ButtonPanel"
+                    HorizontalAlignment="Center"
+                    Grid.Row="2"
+                    Orientation="Horizontal">
+            <Button Name="AddButton" Click="AddButton_OnClick">Добавить</Button>
+            <Button Name="EditButton" Click="EditButton_OnClick">Изменить</Button>
+            <Button Name="RemoveButton" Click="DeleteButton_OnClick">Удалить</Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
