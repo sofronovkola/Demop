@@ -34,7 +34,16 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/kolya/AvaloniaProjects/Demop/Demop/AllUserControl/AuthUC.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/kolya/AvaloniaProjects/Demop/Demop/AllUserControl/EditAddOrderUC.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/kolya/AvaloniaProjects/Demop/Demop/AllUserControl/EditAddProductUC.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/kolya/AvaloniaProjects/Demop/Demop/AllUserControl/MainUC.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/kolya/AvaloniaProjects/Demop/Demop/AllUserControl/OrderUC.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/kolya/AvaloniaProjects/Demop/Demop/App.axaml]

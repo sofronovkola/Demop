@@ -173,3 +173,4 @@ C:\Users\kolya\AvaloniaProjects\Demop\Demop\obj\Debug\net10.0\refint\Demop.dll
 C:\Users\kolya\AvaloniaProjects\Demop\Demop\obj\Debug\net10.0\Demop.pdb
 C:\Users\kolya\AvaloniaProjects\Demop\Demop\obj\Debug\net10.0\Demop.genruntimeconfig.cache
 C:\Users\kolya\AvaloniaProjects\Demop\Demop\obj\Debug\net10.0\ref\Demop.dll
+C:\Users\kolya\AvaloniaProjects\Demop\Demop\obj\Debug\net10.0\Demop.sourcelink.json

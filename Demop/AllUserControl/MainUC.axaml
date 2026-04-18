@@ -25,7 +25,7 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="150,*,120" Margin="5">
+                    <Grid ColumnDefinitions="150,*,120" Margin="5" Background="{Binding RowBackground}">
 
                         <!-- Фото -->
                         <Border Grid.Column="0"
@@ -70,7 +70,16 @@
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Цена: "/>
-                                    <TextBlock Text="{Binding Price}"/>
+                                    <TextBlock Text="{Binding OriginalPriceText}"
+                                               IsVisible="{Binding HasDiscount}"
+                                               Foreground="Red"
+                                               TextDecorations="Strikethrough"/>
+                                    <TextBlock Text="{Binding FinalPriceText}"
+                                               IsVisible="{Binding HasDiscount}"
+                                               Foreground="Black"
+                                               Margin="6,0,0,0"/>
+                                    <TextBlock Text="{Binding OriginalPriceText}"
+                                               IsVisible="{Binding HasNoDiscount}"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
@@ -109,13 +118,27 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+         <StackPanel Name="SortPanel" IsVisible="False" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <ComboBox Name="ManufacturersCBox" 
+            ItemsSource="{Binding manufacturer1}" 
+            DisplayMemberBinding="{Binding Manufacturer1}" 
+            SelectionChanged="ManufacturersCBox_OnSelectionChanged">
+            </ComboBox>
+            <TextBox Name="SearchTextB"></TextBox>
+            <RadioButton Name="SortUpButton" Click="SortButton_OnChecked">по возрастанию</RadioButton>
+            <RadioButton Name="SortDownButton" Click="SortButton_OnChecked">по убыванию</RadioButton>
+            <Button Name="ResetButton" Click="ResetButton_OnClick">Сброс</Button>
+        </StackPanel>
+
         <StackPanel Name="ButtonPanel"
+                    IsVisible="False"
                     HorizontalAlignment="Center"
                     Grid.Row="2"
                     Orientation="Horizontal">
             <Button Name="AddButton" Click="AddButton_OnClick">Добавить</Button>
             <Button Name="EditButton" Click="EditButton_OnClick">Изменить</Button>
             <Button Name="RemoveButton" Click="DeleteButton_OnClick">Удалить</Button>
+            <TextBlock Name="Errors"/>
         </StackPanel>
 
     </Grid>

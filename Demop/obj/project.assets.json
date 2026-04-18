@@ -4292,7 +4292,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.106/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -4575,7 +4575,7 @@
       "code": "NU1903",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Tmds.DBus.Protocol' 0.21.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-xrw6-gwf8-vvr9",
+      "message": "У пакета \"Tmds.DBus.Protocol\" 0.21.2 есть известная уязвимость https://github.com/advisories/GHSA-xrw6-gwf8-vvr9 (уровень серьезности: высокий)",
       "libraryId": "Tmds.DBus.Protocol",
       "targetGraphs": [
         "net10.0"

@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Demop.AllUserControl.OrderUC"
+             xmlns:uc="clr-namespace:Demop.AllUserControl"
+             xmlns:vm="using:Demop.AllUserControl"
+             x:Name = "OrderUserControl"
+             x:DataType="vm:OrderUC">
+ <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height = "*"/>
+      <RowDefinition Height = "5*"/>
+      <RowDefinition Height = "*"/>
+    </Grid.RowDefinitions>
+
+    <ListBox Name="OrderListB" Grid.Row="1" ItemsSource="{Binding orderList}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+        <StackPanel Orientation="Horizontal">                   
+          <StackPanel Orientation="Vertical">
+           
+           
+              <TextBlock Text="{Binding Article}"></TextBlock>
+              <TextBlock Text="{Binding Status }"></TextBlock>
+              <TextBlock Text="{Binding AddressNavigation.AddressName}"></TextBlock>
+              <TextBlock Text="{Binding DateOrder, StringFormat={}{0:MM/dd/yyyy}}"></TextBlock>
+
+            </StackPanel>         
+             <TextBlock Text="{Binding DateDelivery, StringFormat={}{0:MM/dd/yyyy}}"></TextBlock>
+        </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <StackPanel Name="ButtonPanel" HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
+      <Button Name="AddButton">Добавить</Button>
+      <Button Name="EditButton">Изменить</Button>
+      <Button Name="RemoveButton">Удалить</Button>
+      <TextBlock Name="ErrorDelete"/>
+    </StackPanel>
+    </Grid>
+</UserControl>

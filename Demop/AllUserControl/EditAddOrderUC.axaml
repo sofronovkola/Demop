@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Demop.AllUserControl.EditAddOrderUC"
+             xmlns:uc="clr-namespace:Demop.AllUserControl"
+             xmlns:vm="using:Demop.AllUserControl"
+             x:DataType= "vm:EditAddOrderUC">
+
+<Grid>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation = "Horizontal">
+        <StackPanel Orientation="Vertical">
+          <TextBlock>Артикул</TextBlock>
+          <TextBlock>Адрес</TextBlock>
+          <TextBlock>Статус</TextBlock>
+          <TextBlock>Дата заказа</TextBlock>
+          <TextBlock>Дата выдачи</TextBlock>
+        </StackPanel>
+
+        <StackPanel Name="MainPanel" Orientation="Vertical">
+          <TextBox Name="ArticleTextB" Text="{Binding _order.Article}"/>
+          <ComboBox
+          Name="AddressesComboB"
+          DisplayMemberBinding="{Binding AddressName}"
+          ItemsSource="{Binding addresses}"
+          SelectedItem="{Binding _order.AddressNavigation}"/>
+          <TextBox Name="StatusTxtB" Text="{Binding _order.Status}"/>
+          <TextBox Name="DateStart" Text="{Binding _order.DateOrder}"/>
+           <TextBox Name="DateEnd" Text="{Binding _order.DateDelivery}"/>
+
+         
+   
+      </StackPanel>
+      <Button Name="OkClick" Click="OkButton_OnClick">Сохранить</Button>
+    </StackPanel>
+  </Grid>
+</UserControl>

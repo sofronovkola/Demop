@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 
 namespace Demop.Entities;
@@ -55,6 +56,41 @@ public partial class Product
             } 
 
             return new Bitmap(ImagePath);
+        }
+    }
+
+    public bool HasDiscount => Discount.GetValueOrDefault() > 0;
+
+    public bool HasNoDiscount => !HasDiscount;
+
+    public string OriginalPriceText => $"{Price.GetValueOrDefault()}";
+
+    public string FinalPriceText
+    {
+        get
+        {
+            var price = Price.GetValueOrDefault();
+            var discount = Discount.GetValueOrDefault();
+            var finalPrice = price * (1 - discount / 100.0);
+            return $"{Math.Round(finalPrice, 2)}";
+        }
+    }
+
+    public IBrush RowBackground
+    {
+        get
+        {
+            if (Count.GetValueOrDefault() <= 0)
+            {
+                return Brushes.LightBlue;
+            }
+
+            if (Discount.GetValueOrDefault() > 15)
+            {
+                return new SolidColorBrush(Color.Parse("#2E8B57"));
+            }
+
+            return Brushes.Transparent;
         }
     }
 }

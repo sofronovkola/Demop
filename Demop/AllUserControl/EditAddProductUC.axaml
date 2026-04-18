@@ -1,0 +1,61 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Demop.AllUserControl.EditAddProductUC"
+             xmlns:uc="clr-namespace:Demop.AllUserControl"
+             xmlns:vm="using:Demop.AllUserControl"
+             x:DataType= "vm:EditAddProductUC"
+             >
+ <Grid>
+    <StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Orientation="Vertical">
+        <Image
+            Width="100"
+            Height="100"
+            Source="{Binding _product.ImagePath}" />
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <TextBlock>Наименование</TextBlock>
+                <TextBlock>Ед.изм.</TextBlock>
+                <TextBlock>Цена</TextBlock>
+                <TextBlock>Поставщик</TextBlock>
+                <TextBlock>Производитель</TextBlock>
+                <TextBlock>Категория</TextBlock>
+                <TextBlock>Скидка</TextBlock>
+                <TextBlock>На складе</TextBlock>
+                <TextBlock>Описание</TextBlock>
+            </StackPanel>
+
+            <StackPanel Name="MainPanel" Orientation="Vertical">
+                <TextBox Name="NameTextBox" Text="{Binding _product.NameProduct}" />
+                <TextBox Name="UnitTextBox" Text="{Binding _product.ProductUnit}" />
+                <TextBox Name="PriceTextBox" Text="{Binding _product.Price}" />
+
+                <ComboBox
+                    Name="ManufacturerComboBox"
+                    DisplayMemberBinding="{Binding Manufacturer1}"
+                    ItemsSource="{Binding manufacturers}"
+                    SelectedItem="{Binding _product.ManufacturerNavigation}" />
+                <ComboBox
+                    Name="SupplierComboBox"
+                    DisplayMemberBinding="{Binding Supplier1}"
+                    ItemsSource="{Binding suppliers}"
+                    SelectedItem="{Binding _product.SupplierNavigation}" />
+                <ComboBox
+                    Name="CategoryComboBox"
+                    DisplayMemberBinding="{Binding NameProduct}"
+                    ItemsSource="{Binding namesproducts}"
+                    SelectedItem="{Binding _product.NameProductNavigation}" />
+                <TextBox Name="DiscountTextBox" Text="{Binding _product.Discount}" />
+                <TextBox Name="StockTextBox" Text="{Binding _product.CountInStock}" />
+                <TextBox Name="DescriptionTextBox" Text="{Binding _product.Description}" />
+            </StackPanel>
+        </StackPanel>
+        <Button Name="OkButton" Click="OkButton_OnClick">Сохранить</Button>
+    </StackPanel>
+</Grid>
+</UserControl>
