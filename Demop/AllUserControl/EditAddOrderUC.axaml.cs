@@ -36,12 +36,12 @@ public partial class EditAddOrderUC : UserControl
     }
     public void OkButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        _order.Article= ArticleTextB.Text;
+        _order.Article= int.TryParse(ArticleTextB.Text, out var article) ? article : null;
 
         _order.DateOrder = DateStart.Text;
         _order.DateDelivery = DateEnd.Text;
 
-        _order.Status = StatusTxtB.Text;
+        _order.Status = int.TryParse(StatusTxtB.Text, out var status) ? status : null;
         _order.AddressNavigation = (Address)AddressesComboB.SelectedItem;
 
 

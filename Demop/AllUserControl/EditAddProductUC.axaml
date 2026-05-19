@@ -42,16 +42,16 @@
                     SelectedItem="{Binding _product.ManufacturerNavigation}" />
                 <ComboBox
                     Name="SupplierComboBox"
-                    DisplayMemberBinding="{Binding Supplier1}"
+                    DisplayMemberBinding="{Binding Suplier1}"
                     ItemsSource="{Binding suppliers}"
-                    SelectedItem="{Binding _product.SupplierNavigation}" />
+                    SelectedItem="{Binding _product.SuplierNavigation}" />
                 <ComboBox
                     Name="CategoryComboBox"
                     DisplayMemberBinding="{Binding NameProduct}"
                     ItemsSource="{Binding namesproducts}"
                     SelectedItem="{Binding _product.NameProductNavigation}" />
                 <TextBox Name="DiscountTextBox" Text="{Binding _product.Discount}" />
-                <TextBox Name="StockTextBox" Text="{Binding _product.CountInStock}" />
+                <TextBox Name="StockTextBox" Text="{Binding _product.Count}" />
                 <TextBox Name="DescriptionTextBox" Text="{Binding _product.Description}" />
             </StackPanel>
         </StackPanel>

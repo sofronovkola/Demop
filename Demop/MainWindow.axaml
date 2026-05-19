@@ -3,8 +3,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Icon="avares://Demop/Assets/Icons/Icon.ico"
+        FontFamily="Times New Roman"
+        FontSize="18"
         x:Class="Demop.MainWindow"
-        Title="Demop">
+        Title="ООО ОБУВЬ">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -13,7 +16,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock Name="userFIO" HorizontalAlignment="Right"/>
+            <Image Height="100" Width="100" VerticalAlignment="Top" Source="avares://Demop/Assets/Icons/Icon.ico"/>
+            <TextBlock Name="userFIO" HorizontalAlignment="Right"/>
             </StackPanel>
                     
             <ContentControl Grid.Row="0" Name="MainContentControl"></ContentControl>

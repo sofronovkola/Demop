@@ -138,6 +138,7 @@
             <Button Name="AddButton" Click="AddButton_OnClick">Добавить</Button>
             <Button Name="EditButton" Click="EditButton_OnClick">Изменить</Button>
             <Button Name="RemoveButton" Click="DeleteButton_OnClick">Удалить</Button>
+            <Button Name="OrderButton" Click="OrderButton_OnClick">Заказы</Button>
             <TextBlock Name="Errors"/>
         </StackPanel>
 

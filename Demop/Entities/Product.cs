@@ -43,12 +43,12 @@ public partial class Product
     public virtual Suplier? SuplierNavigation { get; set; }
 
 
-    string put=@"C:\Users\kolya\AvaloniaProjects\Demop\Demop\bin\Debug\net10.0\import";
+    string put=@"C:\Users\kolya\AvaloniaProjects\Demop\Demop\Assets\import";
     public Bitmap? ImagePath
     {
         get
         {
-            var ImagePath = @"C:\Users\kolya\AvaloniaProjects\Demop\Demop\bin\Debug\net10.0\import\picture.png";
+            var ImagePath = @"C:\Users\kolya\AvaloniaProjects\Demop\Demop\Assets\import\picture.png";
 
             if (!string.IsNullOrWhiteSpace(Photo))
             {
