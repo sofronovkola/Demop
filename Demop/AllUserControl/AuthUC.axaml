@@ -24,7 +24,9 @@
                 <TextBlock Text="Пароль"/>
                 <TextBox x:Name="PasswordTb" PasswordChar="*"/>
 
-                <Button Content="Войти" Click="LoginBtn_Click"/>       
+                <Button Content="Войти" Click="LoginBtn_Click"/>
+                <Button Content="Войти как гость" Click="GuestBtn_Click"/>
+                <TextBlock x:Name="ErrorTb" Foreground="Red"/>
             </StackPanel>
         </Border>
     </Grid>

@@ -7,6 +7,7 @@
              x:Class="Demop.AllUserControl.MainUC"
              xmlns:uc="clr-namespace:Demop.AllUserControl"
              xmlns:vm="using:Demop.AllUserControl"
+             xmlns:e="using:Demop.Entities"
              Name="MuControl"
              x:DataType="vm:MainUC"
              Loaded="Control_OnLoaded">
@@ -24,7 +25,7 @@
                  SelectionChanged="ProductListBox_OnSelectionChanged">
 
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="e:Product">
                     <Grid ColumnDefinitions="150,*,120" Margin="5" Background="{Binding RowBackground}">
 
                         <!-- Фото -->
@@ -60,12 +61,12 @@
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Производитель: "/>
-                                    <TextBlock Text="{Binding Manufacturer}"/>
+                                    <TextBlock Text="{Binding ManufacturerNavigation.Manufacturer1}"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Поставщик: "/>
-                                    <TextBlock Text="{Binding Suplier}"/>
+                                    <TextBlock Text="{Binding SuplierNavigation.Suplier1}"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
@@ -119,15 +120,15 @@
         </ListBox>
 
          <StackPanel Name="SortPanel" IsVisible="False" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ComboBox Name="ManufacturersCBox" 
-            ItemsSource="{Binding manufacturer1}" 
-            DisplayMemberBinding="{Binding Manufacturer1}" 
-            SelectionChanged="ManufacturersCBox_OnSelectionChanged">
-            </ComboBox>
-            <TextBox Name="SearchTextB"></TextBox>
+            <ComboBox Name="SuppliersCBox"
+                      ItemsSource="{Binding Suppliers}"
+                      DisplayMemberBinding="{Binding Suplier1}"
+                      SelectionChanged="SuppliersCBox_OnSelectionChanged" />
+            <TextBox Name="SearchTextB" TextChanged="SearchTextB_OnTextChanged" Watermark="Поиск" />
             <RadioButton Name="SortUpButton" Click="SortButton_OnChecked">по возрастанию</RadioButton>
             <RadioButton Name="SortDownButton" Click="SortButton_OnChecked">по убыванию</RadioButton>
             <Button Name="ResetButton" Click="ResetButton_OnClick">Сброс</Button>
+            <Button Name="OrdersButton" IsVisible="False" Click="OrderButton_OnClick">Заказы</Button>
         </StackPanel>
 
         <StackPanel Name="ButtonPanel"
@@ -138,7 +139,6 @@
             <Button Name="AddButton" Click="AddButton_OnClick">Добавить</Button>
             <Button Name="EditButton" Click="EditButton_OnClick">Изменить</Button>
             <Button Name="RemoveButton" Click="DeleteButton_OnClick">Удалить</Button>
-            <Button Name="OrderButton" Click="OrderButton_OnClick">Заказы</Button>
             <TextBlock Name="Errors"/>
         </StackPanel>
 

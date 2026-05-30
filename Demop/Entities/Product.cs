@@ -43,19 +43,30 @@ public partial class Product
     public virtual Suplier? SuplierNavigation { get; set; }
 
 
-    string put=@"C:\Users\kolya\AvaloniaProjects\Demop\Demop\Assets\import";
     public Bitmap? ImagePath
     {
         get
         {
-            var ImagePath = @"C:\Users\kolya\AvaloniaProjects\Demop\Demop\Assets\import\picture.png";
+            var importPath = Path.Combine(AppContext.BaseDirectory, "Assets", "import");
+
+            if (!Directory.Exists(importPath))
+            {
+                importPath = Path.Combine(Directory.GetCurrentDirectory(), "Demop", "Assets", "import");
+            }
+
+            var imagePath = Path.Combine(importPath, "picture.png");
 
             if (!string.IsNullOrWhiteSpace(Photo))
             {
-                ImagePath=Path.Combine(put, Photo);
-            } 
+                var productImagePath = Path.Combine(importPath, Photo);
 
-            return new Bitmap(ImagePath);
+                if (File.Exists(productImagePath))
+                {
+                    imagePath = productImagePath;
+                }
+            }
+
+            return File.Exists(imagePath) ? new Bitmap(imagePath) : null;
         }
     }
 

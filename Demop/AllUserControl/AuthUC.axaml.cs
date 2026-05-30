@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
@@ -18,28 +17,22 @@ public partial class AuthUC : UserControl
 
     private void LoginBtn_Click(object? sender, RoutedEventArgs e)
     {
-     User loginUser = Context.Connect.Users.FirstOrDefault(c => c.Login == LoginTb.Text && c.Password == PasswordTb.Text);
-     if (loginUser != null)
-        {
-           App.MainWindow.userFIO.Text=loginUser.Fio.ToString(); //передача ФИО пользователя в MainWindow
+        User? loginUser = Context.Connect.Users.FirstOrDefault(c => c.Login == LoginTb.Text && c.Password == PasswordTb.Text);
 
-            if (loginUser.RoleEmployee == 1)
-            {
-                App.MainWindow.MainContentControl.Content=new MainUC((Int32)loginUser.RoleEmployee);
-            }
-            else if (loginUser.RoleEmployee == 2)
-            {
-                App.MainWindow.MainContentControl.Content=new MainUC();
-            }
-             else if (loginUser.RoleEmployee == 3)
-            {
-                App.MainWindow.MainContentControl.Content=new MainUC();
-            }
-            else
-            {
-                App.MainWindow.MainContentControl.Content=new MainUC();
-            }
+        if (loginUser == null)
+        {
+            ErrorTb.Text = "Неверный логин или пароль";
+            return;
         }
+
+        App.MainWindow.userFIO.Text = loginUser.Fio ?? "Пользователь";
+        App.MainWindow.MainContentControl.Content = new MainUC(loginUser.RoleEmployee.GetValueOrDefault());
+    }
+
+    private void GuestBtn_Click(object? sender, RoutedEventArgs e)
+    {
+        App.MainWindow.userFIO.Text = "Гость";
+        App.MainWindow.MainContentControl.Content = new MainUC(0);
     }
 
 }
