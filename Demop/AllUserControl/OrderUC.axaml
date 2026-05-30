@@ -6,6 +6,7 @@
              x:Class="Demop.AllUserControl.OrderUC"
              xmlns:uc="clr-namespace:Demop.AllUserControl"
              xmlns:vm="using:Demop.AllUserControl"
+             xmlns:e="using:Demop.Entities"
              x:Name = "OrderUserControl"
              x:DataType="vm:OrderUC">
  <Grid>
@@ -17,13 +18,13 @@
 
     <ListBox Name="OrderListB" Grid.Row="1" ItemsSource="{Binding orderList}">
       <ListBox.ItemTemplate>
-        <DataTemplate>
+        <DataTemplate x:DataType="e:Order">
         <StackPanel Orientation="Horizontal">                   
           <StackPanel Orientation="Vertical">
            
            
-              <TextBlock Text="{Binding Article}"></TextBlock>
-              <TextBlock Text="{Binding Status }"></TextBlock>
+              <TextBlock Text="{Binding ArticleNavigation.Article}"></TextBlock>
+              <TextBlock Text="{Binding StatusNavigation.Status1}"></TextBlock>
               <TextBlock Text="{Binding AddressNavigation.AddressName}"></TextBlock>
               <TextBlock Text="{Binding DateOrder, StringFormat={}{0:MM/dd/yyyy}}"></TextBlock>
 
@@ -39,6 +40,7 @@
       <Button Name="EditButton">Изменить</Button>
       <Button Name="RemoveButton">Удалить</Button>
       <TextBlock Name="ErrorDelete"/>
+      <Button Name="BackButton" Click="BackButton_OnClick">Назад</Button>
     </StackPanel>
     </Grid>
 </UserControl>

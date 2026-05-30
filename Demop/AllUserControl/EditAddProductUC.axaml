@@ -19,6 +19,7 @@
             Source="{Binding _product.ImagePath}" />
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
+                <TextBlock>ID</TextBlock>
                 <TextBlock>Наименование</TextBlock>
                 <TextBlock>Ед.изм.</TextBlock>
                 <TextBlock>Цена</TextBlock>
@@ -31,6 +32,7 @@
             </StackPanel>
 
             <StackPanel Name="MainPanel" Orientation="Vertical">
+                <TextBox Name="IdTextBox" Text="{Binding _product.IdProduct}" IsReadOnly="True" />
                 <TextBox Name="NameTextBox" Text="{Binding _product.NameProduct}" />
                 <TextBox Name="UnitTextBox" Text="{Binding _product.ProductUnit}" />
                 <TextBox Name="PriceTextBox" Text="{Binding _product.Price}" />
@@ -55,7 +57,11 @@
                 <TextBox Name="DescriptionTextBox" Text="{Binding _product.Description}" />
             </StackPanel>
         </StackPanel>
-        <Button Name="OkButton" Click="OkButton_OnClick">Сохранить</Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="OkButton" Click="OkButton_OnClick">Сохранить</Button>
+            <Button Name="BackButton" Click="BackButton_OnClick">Назад</Button>
+            <TextBlock Name="ErrorText" Foreground="Red"/>
+        </StackPanel>
     </StackPanel>
 </Grid>
 </UserControl>

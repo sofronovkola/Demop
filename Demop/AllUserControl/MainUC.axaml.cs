@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
-using Avalonia.OpenGL;
 using Demop.Entities;
 using Demop.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,46 +10,55 @@ namespace Demop.AllUserControl;
 
 public partial class MainUC : UserControl
 {
-    public List<Product> ProductList{get;set;}=new List<Product>();
-    public List<Manufacturer> manufacturer1{get; set;} = new List<Manufacturer>();
-    static int user;
-    public MainUC(int userRoles)
+    private const int GuestRole = 0;
+    private const int AdminRole = 1;
+    private const int ManagerRole = 2;
+
+    public List<Product> ProductList { get; set; } = new List<Product>();
+    public List<Suplier> Suppliers { get; set; } = new List<Suplier>();
+    private static int userRole = GuestRole;
+    private Product? selectProduct;
+    private string supplierPar = string.Empty;
+    private string searchPar = string.Empty;
+    private int sort = -1;
+
+    public MainUC(int role)
     {
+        userRole = role;
         InitializeComponent();
-         ProductList = Context.Connect.Products.Include(c => c.ManufacturerNavigation)
-                                      .Include(c => c.NameProductNavigation)
-                                      .Include(c => c.Orders)
-                                      .Include(c => c.SuplierNavigation).ToList();
-         manufacturer1=Context.Connect.Manufacturers.ToList(); 
-         user = userRoles;
-         VisibleUI();                            
+        LoadData();
+        VisibleUI();
     }
 
     public MainUC()
     {
         InitializeComponent();
-         ProductList = Context.Connect.Products.Include(c => c.ManufacturerNavigation)
-                                      .Include(c => c.NameProductNavigation)
-                                      .Include(c => c.Orders)
-                                      .Include(c => c.SuplierNavigation).ToList();
-        
-        manufacturer1=Context.Connect.Manufacturers.ToList();
-        if(user==1 || user == 2)
-        {
-            VisibleUI();
-        }
+        LoadData();
+        VisibleUI();
+    }
+
+    private void LoadData()
+    {
+        ProductList = Context.Connect.Products.Include(c => c.ManufacturerNavigation)
+            .Include(c => c.NameProductNavigation)
+            .Include(c => c.SuplierNavigation)
+            .ToList();
+
+        Suppliers = Context.Connect.Supliers.ToList();
+        Suppliers.Insert(0, new Suplier { IdSuplier = 0, Suplier1 = "Все поставщики" });
     }
 
     private void VisibleUI()
     {
-        if (user == 1)
+        if (userRole == AdminRole || userRole == ManagerRole)
         {
-            SortPanel.IsVisible=true;
-            ButtonPanel.IsVisible=true;
+            SortPanel.IsVisible = true;
+            OrdersButton.IsVisible = true;
         }
-        if (user == 2)
+
+        if (userRole == AdminRole)
         {
-            SortPanel.IsVisible=true;
+            ButtonPanel.IsVisible = true;
         }
     }
 
@@ -61,11 +67,9 @@ public partial class MainUC : UserControl
         DataContext = this;
     }
 
-    Product selectProduct;
-
-        private void ProductListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void ProductListBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        selectProduct = (Product)ProdustListB.SelectedItem;
+        selectProduct = ProdustListB.SelectedItem as Product;
     }
 
     private void AddButton_OnClick(object? sender, RoutedEventArgs e)
@@ -75,79 +79,110 @@ public partial class MainUC : UserControl
 
     private void EditButton_OnClick(object? sender, RoutedEventArgs e)
     {
+        if (selectProduct == null)
+        {
+            Errors.Text = "Выберите товар для редактирования";
+            return;
+        }
+
         App.MainWindow.MainContentControl.Content = new EditAddProductUC(selectProduct);
     }
 
     private void DeleteButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (Context.Connect.Ordersproducts.FirstOrDefault(c => c.ProductNavigation.IdProduct == selectProduct.IdProduct) != null)
+        if (selectProduct == null)
         {
-            Errors.Text="Данный товар имеется в списке заказов. Невозможно удалить";
+            Errors.Text = "Выберите товар для удаления";
+            return;
         }
-    else
-    {
+
+        if (Context.Connect.Ordersproducts.Any(c => c.Product == selectProduct.IdProduct))
+        {
+            Errors.Text = "Данный товар имеется в списке заказов. Невозможно удалить";
+            return;
+        }
+
         Context.Connect.Products.Remove(selectProduct);
         Context.Connect.SaveChanges();
+        App.MainWindow.MainContentControl.Content = new MainUC(userRole);
     }
 
-    App.MainWindow.MainContentControl.Content = new MainUC();
-    }
-
-    private string manufacturerPar;
-    private string searchPar;
-    private int sort=0;
-
-     void Search(string manufacturer, string search, int sort = -1)
+    private void Search(string supplier, string search, int selectedSort = -1)
     {
-    ProductList = Context.Connect.Products.Include(c => c.ManufacturerNavigation).Where
-        (c => c.ManufacturerNavigation.Manufacturer1.Contains(manufacturerPar) && c.NameProductNavigation.NameProduct.Contains(searchPar)).ToList();
+        supplierPar = supplier ?? string.Empty;
+        searchPar = search ?? string.Empty;
 
-    if (sort == 1)
-    {
-        ProductList = ProductList.OrderBy(c => c.Count).ToList();
+        var query = Context.Connect.Products.Include(c => c.ManufacturerNavigation)
+            .Include(c => c.NameProductNavigation)
+            .Include(c => c.SuplierNavigation)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(supplierPar))
+        {
+            query = query.Where(c => c.SuplierNavigation != null && c.SuplierNavigation.Suplier1 != null && c.SuplierNavigation.Suplier1.Contains(supplierPar));
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchPar))
+        {
+            query = query.Where(c =>
+                (c.NameProductNavigation != null && c.NameProductNavigation.NameProduct != null && c.NameProductNavigation.NameProduct.Contains(searchPar)) ||
+                (c.Category != null && c.Category.Contains(searchPar)) ||
+                (c.Description != null && c.Description.Contains(searchPar)) ||
+                (c.ManufacturerNavigation != null && c.ManufacturerNavigation.Manufacturer1 != null && c.ManufacturerNavigation.Manufacturer1.Contains(searchPar)) ||
+                (c.SuplierNavigation != null && c.SuplierNavigation.Suplier1 != null && c.SuplierNavigation.Suplier1.Contains(searchPar)) ||
+                (c.ProductUnit != null && c.ProductUnit.Contains(searchPar)));
+        }
+
+        ProductList = query.ToList();
+
+        if (selectedSort == 1)
+        {
+            ProductList = ProductList.OrderBy(c => c.Count).ToList();
+        }
+
+        if (selectedSort == 0)
+        {
+            ProductList = ProductList.OrderByDescending(c => c.Count).ToList();
+        }
+
+        ProdustListB.ItemsSource = ProductList;
     }
 
-    if (sort == 0)
+    private void SuppliersCBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        ProductList = ProductList.OrderByDescending(c => c.Count).ToList();
+        var supplier = SuppliersCBox.SelectedItem as Suplier;
+        supplierPar = supplier == null || supplier.IdSuplier == 0 ? string.Empty : supplier.Suplier1 ?? string.Empty;
+        Search(supplierPar, searchPar, sort);
     }
 
-    ProdustListB.ItemsSource=ProductList;
-    }
-
-     private void ManufacturersCBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void SearchTextB_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
-    manufacturerPar = (ManufacturersCBox.SelectedItem as Manufacturer)?.Manufacturer1 ?? string.Empty;
-    Search(manufacturerPar, searchPar);
-    }
-
-    private void SearchTextB_OnTextChanged(object? sender, RoutedEventArgs e)
-    {
-    searchPar = SearchTextB.Text;
-    Search(manufacturerPar, searchPar);
+        searchPar = SearchTextB.Text ?? string.Empty;
+        Search(supplierPar, searchPar, sort);
     }
 
     private void SortButton_OnChecked(object? sender, RoutedEventArgs e)
     {
-    if (SortUpButton.IsChecked == true)
-    {
-        sort = 1;
-    }
+        if (SortUpButton.IsChecked == true)
+        {
+            sort = 1;
+        }
 
-    if (SortDownButton.IsChecked == true)
-    {
-        sort = 0;
-    }
-    Search(manufacturerPar, searchPar, sort);
+        if (SortDownButton.IsChecked == true)
+        {
+            sort = 0;
+        }
+
+        Search(supplierPar, searchPar, sort);
     }
 
     private void ResetButton_OnClick(object? sender, RoutedEventArgs e)
     {
-       App.MainWindow.MainContentControl.Content = new MainUC(); 
+        App.MainWindow.MainContentControl.Content = new MainUC(userRole);
     }
 
     private void OrderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-       App.MainWindow.MainContentControl.Content = new OrderUC(); 
+        App.MainWindow.MainContentControl.Content = new OrderUC(userRole);
     }
 }

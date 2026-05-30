@@ -18,6 +18,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Image Height="100" Width="100" VerticalAlignment="Top" Source="avares://Demop/Assets/Icons/Icon.ico"/>
             <TextBlock Name="userFIO" HorizontalAlignment="Right"/>
+            <Button Name="LogoutButton" Content="Выход" Click="LogoutButton_OnClick"/>
             </StackPanel>
                     
             <ContentControl Grid.Row="0" Name="MainContentControl"></ContentControl>

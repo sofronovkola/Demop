@@ -38,13 +38,52 @@ public partial class EditAddProductUC : UserControl
 
     private void OkButton_OnClick(object? sender, RoutedEventArgs e)
     {
-    if (_product.Article == null)
-    {
-        _product.Article = GenerateUniqueArticul();
-        Context.Connect.Products.Add(_product);
+        if (_product.Price.GetValueOrDefault() < 0)
+        {
+            ErrorText.Text = "Цена не может быть отрицательной";
+            return;
+        }
+
+        if (_product.Count.GetValueOrDefault() < 0)
+        {
+            ErrorText.Text = "Количество не может быть отрицательным";
+            return;
+        }
+
+        if (_product.Discount.GetValueOrDefault() < 0 || _product.Discount.GetValueOrDefault() > 100)
+        {
+            ErrorText.Text = "Скидка должна быть от 0 до 100";
+            return;
+        }
+
+        if (ManufacturerComboBox.SelectedItem is Manufacturer manufacturer)
+        {
+            _product.Manufacturer = manufacturer.IdManufacturer;
+        }
+
+        if (SupplierComboBox.SelectedItem is Suplier supplier)
+        {
+            _product.Suplier = supplier.IdSuplier;
+        }
+
+        if (CategoryComboBox.SelectedItem is Namesproduct namesproduct)
+        {
+            _product.NameProduct = namesproduct.IdNameproduct;
+        }
+
+        if (_product.Article == null)
+        {
+            _product.Article = GenerateUniqueArticul();
+            Context.Connect.Products.Add(_product);
+        }
+
+        Context.Connect.SaveChanges();
+        App.MainWindow.MainContentControl.Content = new MainUC();
     }
-    Context.Connect.SaveChanges();
-    App.MainWindow.MainContentControl.Content = new MainUC();
+
+    private void BackButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        App.MainWindow.MainContentControl.Content = new MainUC();
     }
 
     private string GenerateUniqueArticul()
